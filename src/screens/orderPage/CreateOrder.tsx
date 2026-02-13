@@ -15,23 +15,22 @@ export default function CreateOrderScreen() {
   const cartItems = useAppSelector((state) => state.order.cartItems);
   const promoCode = useAppSelector((state) => state.order.promoCode);
 
+  // Calculate order summary with promo discount
   const orderSummary = useMemo(() => {
-    return calculateOrderSummary(cartItems, 0); // Will add promo discount later
-  }, [cartItems]);
+    const discount = promoCode.isApplied ? (promoCode.discountAmount || 0) : 0;
+    return calculateOrderSummary(cartItems, discount);
+  }, [cartItems, promoCode.isApplied, promoCode.discountAmount]);
 
   const handlePlaceOrder = useCallback(() => {
-    // Navigation to payment screen will be added later
-    console.log('Place Order pressed');
-    // router.push('/make-payment');
-  }, []);
+    // Navigate to payment screen
+    router.push('/make-payment');
+  }, [router]);
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Create Order</Text>
-
-          </View>
         </View>
 
         <ScrollView 
@@ -68,6 +67,13 @@ export default function CreateOrderScreen() {
               label="Delivery Fee:" 
               value={formatCurrency(orderSummary.deliveryFee)} 
             />
+            
+            {promoCode.isApplied && orderSummary.promoDiscount > 0 && (
+              <SummaryRow 
+                label="Promo Discount:" 
+                value={`-${formatCurrency(orderSummary.promoDiscount)}`} 
+              />
+            )}
             
             <View style={styles.divider} />
             

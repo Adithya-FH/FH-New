@@ -1,3 +1,5 @@
+import { Coupon } from './coupon.types';
+
 export interface CartItem {
   id: string;
   name: string;
@@ -16,4 +18,8 @@ export interface OrderSummary {
 export interface PromoCode {
   code: string;
   isApplied: boolean;
+  isLoading?: boolean;
+  error?: string;
+  appliedCoupon?: Coupon;
+  discountAmount?: number;
 }

@@ -84,21 +84,6 @@ export default function CreateOrderScreen() {
             />
           </View>
 
-          {/* Duplicate Summary for visual match */}
-          <View style={styles.section}>
-            <SummaryRow 
-              label="Subtotal:" 
-              value={formatCurrency(orderSummary.subtotal)} 
-            />
-            <SummaryRow 
-              label="Tax:" 
-              value={formatCurrency(orderSummary.tax)} 
-            />
-            <SummaryRow 
-              label="Delivery Fee:" 
-              value={formatCurrency(orderSummary.deliveryFee)} 
-            />
-          </View>
         </ScrollView>
 
         {/* Place Order Button */}
